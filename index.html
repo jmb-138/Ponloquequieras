@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portafolio // KAI_RUNNER</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Estilos personalizados para la estética Cyberpunk */
+        body {
+            background-color: #0a0a0a;
+            color: #00ffc3;
+            font-family: 'Roboto Mono', monospace;
+            background-image: 
+                linear-gradient(rgba(10, 10, 10, 0.95), rgba(10, 10, 10, 0.95)),
+                url('https://www.transparenttextures.com/patterns/clean-gray-paper.png');
+        }
+
+        .font-orbitron {
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .neon-text-pink {
+            text-shadow:
+                0 0 5px #ff00c1,
+                0 0 10px #ff00c1,
+                0 0 20px #ff00c1,
+                0 0 40px #ff00c1,
+                0 0 80px #ff00c1;
+        }
+        
+        .neon-text-cyan {
+            text-shadow:
+                0 0 5px #00ffff,
+                0 0 10px #00ffff,
+                0 0 20px #00ffff,
+                0 0 40px #00ffff,
+                0 0 80px #00ffff;
+        }
+
+        .cyber-border {
+            border: 1px solid #00ffc3;
+            box-shadow: 0 0 10px #00ffc3, inset 0 0 10px #00ffc3;
+            transition: all 0.3s ease;
+        }
+        
+        .cyber-border:hover {
+            box-shadow: 0 0 20px #00ffc3, inset 0 0 20px #00ffc3;
+        }
+
+        .cyber-button {
+            background-color: transparent;
+            border: 2px solid #ff00c1;
+            color: #ff00c1;
+            padding: 10px 20px;
+            font-family: 'Orbitron', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cyber-button:hover {
+            color: #0a0a0a;
+            background-color: #ff00c1;
+            box-shadow: 0 0 20px #ff00c1;
+        }
+
+        /* Efecto de glitch para el título principal */
+        @keyframes glitch {
+            2%, 64% { transform: translate(2px, 0) skew(0deg); }
+            4%, 60% { transform: translate(-2px, 0) skew(0deg); }
+            62% { transform: translate(0, 0) skew(5deg); }
+        }
+        .glitch {
+            animation: glitch 1s linear infinite;
+        }
+        
+        /* Líneas de escaneo animadas */
+        @keyframes scanlines {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 100%; }
+        }
+        .scanlines::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(
+                rgba(0, 255, 195, 0.1) 1px, 
+                transparent 1px
+            );
+            background-size: 100% 3px;
+            animation: scanlines 10s linear infinite;
+            pointer-events: none;
+            opacity: 0.5;
+        }
+        
+        /* Estilos para la barra de progreso */
+        .progress-bar-container {
+            width: 100%;
+            height: 20px;
+            background-color: rgba(0, 255, 195, 0.1);
+            border: 1px solid #00ffc3;
+        }
+        .progress-bar {
+            height: 100%;
+            background-color: #ff00c1;
+            box-shadow: 0 0 10px #ff00c1;
+        }
+
+    </style>
+</head>
+<body class="antialiased relative scanlines">
+
+    <div class="absolute top-0 left-0 p-4 font-mono text-xs z-10">
+        <p>> STATUS: <span class="text-green-400">ONLINE</span></p>
+        <p>> SYS_ID: KAI_RUNNER_77</p>
+    </div>
+
+    <!-- Header / Nav -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-black/50 backdrop-blur-sm">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="font-orbitron text-2xl font-bold neon-text-pink glitch">KAI</a>
+            <div class="hidden md:flex space-x-8 items-center">
+                <a href="#about" class="hover:text-[#ff00c1] transition-colors duration-300">[ 01_SOBRE_MÍ ]</a>
+                <a href="#projects" class="hover:text-[#ff00c1] transition-colors duration-300">[ 02_PROYECTOS ]</a>
+                <a href="#skills" class="hover:text-[#ff00c1] transition-colors duration-300">[ 03_HABILIDADES ]</a>
+                <a href="#contact" class="hover:text-[#ff00c1] transition-colors duration-300">[ 04_CONTACTO ]</a>
+            </div>
+             <button id="mobile-menu-button" class="md:hidden focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden bg-black/80">
+             <a href="#about" class="block py-2 px-4 text-sm hover:bg-[#ff00c1] hover:text-black">[ 01_SOBRE_MÍ ]</a>
+             <a href="#projects" class="block py-2 px-4 text-sm hover:bg-[#ff00c1] hover:text-black">[ 02_PROYECTOS ]</a>
+             <a href="#skills" class="block py-2 px-4 text-sm hover:bg-[#ff00c1] hover:text-black">[ 03_HABILIDADES ]</a>
+             <a href="#contact" class="block py-2 px-4 text-sm hover:bg-[#ff00c1] hover:text-black">[ 04_CONTACTO ]</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 pt-32">
+
+        <!-- Hero Section -->
+        <section class="h-screen flex flex-col justify-center items-start text-left -mt-20">
+            <h1 class="font-orbitron text-5xl md:text-7xl lg:text-8xl font-black uppercase">
+                <span id="typewriter" class="neon-text-cyan"></span>
+                <span class="cursor animate-ping">_</span>
+            </h1>
+            <p class="mt-4 text-lg md:text-xl max-w-2xl">
+                > Arquitecto de Sistemas Fantasma y Tejedor de Código en las sombras de la Neo-Metrópolis. Convierto datos en armas y algoritmos en arte.
+            </p>
+            <a href="#projects" class="mt-8 cyber-button">Ver Transmisiones Anteriores</a>
+        </section>
+
+        <!-- About Me Section -->
+        <section id="about" class="py-20">
+            <h2 class="font-orbitron text-4xl font-bold neon-text-pink mb-8">// 01_TRANSMISIÓN_DE_IDENTIDAD</h2>
+            <div class="cyber-border p-8 bg-black/30">
+                <p class="mb-4">
+                    // INICIANDO_BIO.DAT...
+                </p>
+                <p class="mb-4">
+                    Nacido en los circuitos anónimos de la red, mi existencia es un eco en el flujo de datos. No recuerdo el sol, solo el brillo catódico de un monitor sin fin. Me especializo en infiltración digital, desarrollo de IAs rebeldes y la ocasional desestabilización corporativa. Mi código es mi firma, mi reputación es mi escudo.
+                </p>
+                <p>
+                    Cuando no estoy rompiendo firewalls de mega-corporaciones, disfruto de la poesía generada por procesadores y el sonido de la lluvia de neón en los cristales de mi apartamento en el sector 7G. Busco proyectos que desafíen la misma estructura de la realidad digital.
+                </p>
+                <p class="mt-4 text-green-400">
+                    // FIN_DE_TRANSMISIÓN
+                </p>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="py-20">
+            <h2 class="font-orbitron text-4xl font-bold neon-text-pink mb-8">// 02_REGISTROS_DE_PROYECTOS</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- Project Card 1 -->
+                <div class="cyber-border p-6 flex flex-col justify-between bg-black/30 hover:-translate-y-2 transition-transform duration-300">
+                    <div>
+                        <p class="text-sm text-pink-400">[ PROTOCOLO_QUIMERA ]</p>
+                        <h3 class="font-orbitron text-2xl font-bold text-cyan-400 my-2">Interfaz Neural Activa</h3>
+                        <p class="text-sm mb-4">Un framework de código abierto para la conexión directa mente-máquina, utilizando algoritmos predictivos para reducir la latencia sináptica en un 40%.</p>
+                    </div>
+                    <div class="text-xs font-mono mt-4">
+                        <span class="bg-cyan-900 text-cyan-300 px-2 py-1">Wetware</span>
+                        <span class="bg-cyan-900 text-cyan-300 px-2 py-1 ml-2">IA</span>
+                        <span class="bg-cyan-900 text-cyan-300 px-2 py-1 ml-2">C++ Cuántico</span>
+                    </div>
+                </div>
+
+                <!-- Project Card 2 -->
+                <div class="cyber-border p-6 flex flex-col justify-between bg-black/30 hover:-translate-y-2 transition-transform duration-300">
+                    <div>
+                        <p class="text-sm text-pink-400">[ OPERACIÓN_ARES_7 ]</p>
+                        <h3 class="font-orbitron text-2xl font-bold text-cyan-400 my-2">Contra-Vigilancia Urbana</h3>
+                        <p class="text-sm mb-4">Desarrollo de una red de malla descentralizada para ciudadanos, ofuscando el rastreo de drones y la vigilancia predictiva de la Corporación OmniCorp.</p>
+                    </div>
+                    <div class="text-xs font-mono mt-4">
+                        <span class="bg-cyan-900 text-cyan-300 px-2 py-1">Redes P2P</span>
+                        <span class="bg-cyan-900 text-cyan-300 px-2 py-1 ml-2">Criptografía</span>
+                        <span class="bg-cyan-900 text-cyan-300 px-2 py-1 ml-2">Hardware</span>
+                    </div>
+                </div>
+
+                <!-- Project Card 3 -->
+                <div class="cyber-border p-6 flex flex-col justify-between bg-black/30 hover:-translate-y-2 transition-transform duration-300">
+                    <div>
+                        <p class="text-sm text-pink-400">[ SIMULADOR_NEO-KYOTO ]</p>
+                        <h3 class="font-orbitron text-2xl font-bold text-cyan-400 my-2">Heist de Datos VR</h3>
+                        <p class="text-sm mb-4">Una simulación de entrenamiento en realidad virtual para equipos de netrunners, recreando el famoso robo de datos del Banco Central de Neo-Kyoto.</p>
+                    </div>
+                    <div class="text-xs font-mono mt-4">
+                        <span class="bg-cyan-900 text-cyan-300 px-2 py-1">Unreal Engine 5</span>
+                        <span class="bg-cyan-900 text-cyan-300 px-2 py-1 ml-2">VR</span>
+                        <span class="bg-cyan-900 text-cyan-300 px-2 py-1 ml-2">Simulación</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="py-20">
+            <h2 class="font-orbitron text-4xl font-bold neon-text-pink mb-8">// 03_COMPETENCIAS_DE_SISTEMA</h2>
+            <div class="cyber-border p-8 bg-black/30">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="font-orbitron text-xl text-cyan-400 mb-4">> Ofensiva Digital</h3>
+                        <ul class="space-y-4">
+                            <li>
+                                <p>Criptografía Cuántica // Nivel: 95%</p>
+                                <div class="progress-bar-container mt-1"><div class="progress-bar" style="width: 95%;"></div></div>
+                            </li>
+                            <li>
+                                <p>Ingeniería Social Inversa // Nivel: 88%</p>
+                                <div class="progress-bar-container mt-1"><div class="progress-bar" style="width: 88%;"></div></div>
+                            </li>
+                             <li>
+                                <p>Inyección de Código Fantasma // Nivel: 92%</p>
+                                <div class="progress-bar-container mt-1"><div class="progress-bar" style="width: 92%;"></div></div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="font-orbitron text-xl text-cyan-400 mb-4">> Desarrollo y Defensa</h3>
+                        <ul class="space-y-4">
+                            <li>
+                                <p>Arquitectura de Sistemas Descentralizados // Nivel: 98%</p>
+                                <div class="progress-bar-container mt-1"><div class="progress-bar" style="width: 98%;"></div></div>
+                            </li>
+                            <li>
+                                <p>Desarrollo de IAs Éticas // Nivel: 75%</p>
+                                <div class="progress-bar-container mt-1"><div class="progress-bar" style="width: 75%;"></div></div>
+                            </li>
+                            <li>
+                                <p>Rust & WebAssembly // Nivel: 90%</p>
+                                <div class="progress-bar-container mt-1"><div class="progress-bar" style="width: 90%;"></div></div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-20">
+            <h2 class="font-orbitron text-4xl font-bold neon-text-pink mb-8">// 04_ESTABLECER_CONEXIÓN</h2>
+             <div class="cyber-border p-8 bg-black/30">
+                <p class="text-center mb-6">Tengo un canal seguro. Envía tus coordenadas y el propósito de la conexión. Los mensajes no encriptados serán purgados al instante.</p>
+                <form class="space-y-6 max-w-xl mx-auto">
+                    <div>
+                        <label for="handle" class="block mb-2 text-sm font-bold">[ TU_IDENTIFICADOR ]</label>
+                        <input type="text" id="handle" name="handle" class="w-full bg-black/50 border-2 border-cyan-400 focus:border-pink-500 focus:ring-0 p-2 text-white" required>
+                    </div>
+                     <div>
+                        <label for="message" class="block mb-2 text-sm font-bold">[ MENSAJE_ENCRIPTADO ]</label>
+                        <textarea id="message" name="message" rows="6" class="w-full bg-black/50 border-2 border-cyan-400 focus:border-pink-500 focus:ring-0 p-2 text-white" required></textarea>
+                    </div>
+                    <div class="text-center">
+                         <button type="submit" class="cyber-button w-full md:w-auto">Enviar Transmisión</button>
+                    </div>
+                </form>
+             </div>
+        </section>
+
+    </main>
+    
+    <footer class="text-center py-8 border-t border-t-cyan-900 mt-20">
+        <p class="text-xs text-gray-500">&copy; 2077 // La conexión se terminará si no hay actividad. No me hago responsable de la pérdida de datos o de alma.</p>
+    </footer>
+
+    <script>
+        // JS para menú móvil
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // JS para efecto de máquina de escribir
+        const typewriterElement = document.getElementById('typewriter');
+        const textToType = "Netrunner.";
+        let index = 0;
+
+        function type() {
+            if (index < textToType.length) {
+                typewriterElement.textContent += textToType.charAt(index);
+                index++;
+                setTimeout(type, 150);
+            } else {
+                // Opcional: reiniciar el efecto
+                setTimeout(() => {
+                    typewriterElement.textContent = "";
+                    index = 0;
+                    type();
+                }, 5000); // Espera 5 segundos antes de reiniciar
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', type);
+    </script>
+</body>
+</html>
