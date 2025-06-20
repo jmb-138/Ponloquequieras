@@ -31,6 +31,14 @@
                 0 0 40px #ff00c1,
                 0 0 80px #ff00c1;
         }
+
+        .neon-text-red {
+             text-shadow:
+                0 0 5px #ff3333,
+                0 0 10px #ff3333,
+                0 0 20px #d40000,
+                0 0 40px #d40000;
+        }
         
         .neon-text-cyan {
             text-shadow:
@@ -113,6 +121,17 @@
             height: 100%;
             background-color: #ff00c1;
             box-shadow: 0 0 10px #ff00c1;
+        }
+
+        /* Estilo Matrix para los campos del formulario */
+        .matrix-input {
+            color: #00ffc3;
+            text-shadow: 0 0 5px rgba(0, 255, 195, 0.7);
+            caret-color: #ff00c1;
+        }
+        .matrix-input::placeholder {
+            color: rgba(0, 255, 195, 0.4);
+            text-shadow: none;
         }
 
     </style>
@@ -280,11 +299,11 @@
                 <form class="space-y-6 max-w-xl mx-auto">
                     <div>
                         <label for="handle" class="block mb-2 text-sm font-bold">[ TU_IDENTIFICADOR ]</label>
-                        <input type="text" id="handle" name="handle" class="w-full bg-black/50 border-2 border-cyan-400 focus:border-pink-500 focus:ring-0 p-2 text-white" required>
+                        <input type="text" id="handle" name="handle" class="w-full bg-black/50 border-2 border-cyan-400 focus:border-pink-500 focus:ring-0 p-2 matrix-input" required>
                     </div>
                      <div>
                         <label for="message" class="block mb-2 text-sm font-bold">[ MENSAJE_ENCRIPTADO ]</label>
-                        <textarea id="message" name="message" rows="6" class="w-full bg-black/50 border-2 border-cyan-400 focus:border-pink-500 focus:ring-0 p-2 text-white" required></textarea>
+                        <textarea id="message" name="message" rows="6" class="w-full bg-black/50 border-2 border-cyan-400 focus:border-pink-500 focus:ring-0 p-2 matrix-input" required></textarea>
                     </div>
                     <div class="text-center">
                          <button type="submit" class="cyber-button w-full md:w-auto">Enviar Transmisión</button>
@@ -298,6 +317,16 @@
     <footer class="text-center py-8 border-t border-t-cyan-900 mt-20">
         <p class="text-xs text-gray-500">// AVISO: Todo el contenido de este portafolio es un constructo generado por la IA de Google. La realidad es probablemente menos interesante. &copy; 2025</p>
     </footer>
+
+    <!-- Modal de Alerta -->
+    <div id="alert-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-[100] hidden">
+        <div class="cyber-border bg-black p-8 rounded-lg max-w-sm w-full text-center mx-4 animate-fadeIn">
+            <h3 class="font-orbitron text-2xl font-bold text-red-500 mb-4 neon-text-red">[ TRANSMISIÓN FALLIDA ]</h3>
+            <p class="mb-6 text-white">> Error de encriptación. Datos corruptos. La conexión no pudo ser establecida. Re-calibra tus protocolos y vuelve a intentarlo.</p>
+            <button id="retry-button" class="cyber-button">Volver a Intentar</button>
+        </div>
+    </div>
+
 
     <script>
         // JS para menú móvil
@@ -329,6 +358,25 @@
         }
 
         document.addEventListener('DOMContentLoaded', type);
+
+        // --- Lógica del Modal ---
+        const contactForm = document.querySelector('#contact form');
+        const alertModal = document.getElementById('alert-modal');
+        const retryButton = document.getElementById('retry-button');
+        const handleInput = document.getElementById('handle');
+        const messageInput = document.getElementById('message');
+
+        contactForm.addEventListener('submit', function(event) {
+            event.preventDefault(); // Evita que el formulario se envíe de verdad
+            alertModal.classList.remove('hidden'); // Muestra el modal
+        });
+
+        retryButton.addEventListener('click', function() {
+            alertModal.classList.add('hidden'); // Oculta el modal
+            handleInput.value = ''; // Limpia el primer campo
+            messageInput.value = ''; // Limpia el segundo campo
+        });
+
     </script>
 </body>
 </html>
